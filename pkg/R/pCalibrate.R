@@ -8,10 +8,10 @@ BF2pp <- function(BF, prior.prob=0.5){
   return (post.prob)
 }
 
-
-##########################################
+           
+########################################
 # p-based Bayes factors
-##########################################
+########################################
 
 
 pCalibrate <- function(p,  alternative="noninformative", transform="id"){
@@ -28,8 +28,8 @@ pCalibrate <- function(p,  alternative="noninformative", transform="id"){
   return(result)
 }
 
-
-
+   
+         
 ###############################################
 # Bayes factors based on a test statistic
 ###############################################
