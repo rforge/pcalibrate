@@ -1,0 +1,10 @@
+Package: pCalibrate
+Type: Package
+Title: Bayesian Calibrations of P-Values
+Version: 0.1-2
+Date: 2017-11-03
+Author: Manuela Ott [aut, cre], Leonhard Held [aut] 
+Maintainer: Manuela Ott <manuela.ott@uzh.ch>
+Description: Implements transformations of P-values to the smallest possible Bayes factor within the specified class of alternative hypotheses. Covers several common testing scenarios such as z-tests, t-tests, likelihood ratio tests and the F-test of overall significance in the linear model.
+Depends: epitools, exact2x2, MCMCpack
+License: GPL (>=2)

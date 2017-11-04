@@ -1,0 +1,20 @@
+ 
+citHeader(paste("To cite the R-package 'pCalibrate' in publications,",
+                "please use:")) 	  
+
+citEntry(entry="article",
+	 title="On p-values and Bayes factors",
+	 author=c(person(given="Leonhard", family="Held", role = "aut"),
+      				 person(given="Manuela", family="Ott", role = "aut")), 
+ 	 journal="Annual Review of Statistics and its Application",
+	 year=2017,
+	 volume=5,
+	 note="To appear",
+	 textVersion=paste("Held, L. and Ott, M. (2017):",
+	                   "On p-values and Bayes factors.",
+			   "Annual Review of Statistics and its Application, 5, to appear."
+	 	    	   ))
+
+
+
+
