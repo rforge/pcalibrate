@@ -8,7 +8,7 @@
 \description{Implements transformations of one- and two-sided P-values
 to the smallest possible Bayes factor (for the point null hypothesis against the alternative) 
 within the specified class of alternative hypotheses.
-It covers several common testing scenarios:
+% It covers several common testing scenarios:
 The function \code{pCalibrate()} provides transformations (called calibrations in the sequel) 
 for two-sided P-values
 which consider the P-value as the data and are directly based on the distribution of the P-value 
@@ -31,7 +31,7 @@ Title: Bayesian Calibrations of P-Values
 
 Version: 0.1-2
 
-Date: 2017-11-03
+Date: 2017-11-04
 
 Author: Manuela Ott [aut, cre], Leonhard Held [aut] 
 

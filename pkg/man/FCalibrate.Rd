@@ -27,9 +27,9 @@ FCalibrate(p, n, d, alternative="chi.squared", intercept=TRUE, transform="id")
   \item{alternative}{either \code{"simple"} or \code{"chi.squared"}.
   Defaults to \code{"chi.squared"}.
   Specifies the alternative hypotheses
-  on the non-centrality parameter of the F-distribution to consider.
+  on the non-centrality parameter of the non-central F-distribution to consider.
   \code{"simple"} only considers simple point alternative hypotheses.
-  \code{"chi.squared"} assumes a scaled chi-square distribution.
+  \code{"chi.squared"} assumes a scaled chi-squared distribution.
 %%     ~~Describe \code{alternative} here~~
 }
   \item{intercept}{logical. If TRUE, the linear model contains an unknown intercept term,

@@ -28,7 +28,7 @@ LRCalibrate(p, df, alternative="gamma", transform="id")
   either \code{"simple"} or \code{"gamma"}.
   Defaults to \code{"gamma"}.
   Specifies the alternative hypotheses on the non-centrality
-  parameter of the chi-squared distribution to consider.
+  parameter of the non-central chi-squared distribution to consider.
   \code{"simple"} only considers simple point alternative hypotheses.
   \code{"gamma"} assumes a specific gamma distribution.
 %%     ~~Describe \code{alternative} here~~
@@ -55,7 +55,7 @@ LRCalibrate(p, df, alternative="gamma", transform="id")
     
     For \code{alternative = "simple"}, the lower bound on the Bayes factor
     is obtained by mazimizing the
-    (asymptotic) chi-squared distribution under the alternative
+    density function of the (asymptotic) non-central chi-squared distribution under the alternative
     with respect to the non-centrality parameter.
     That calibration is described in
     Held and Ott (2017), Section 4.2.1.
