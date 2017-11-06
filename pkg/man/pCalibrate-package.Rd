@@ -6,9 +6,11 @@
 \packageTitle{pCalibrate}
 }
 \description{Implements transformations of one- and two-sided P-values
-to the smallest possible Bayes factor (for the point null hypothesis against the alternative) 
-within the specified class of alternative hypotheses.
-% It covers several common testing scenarios:
+to minimum Bayes factors.
+The minimum Bayes factor is the smallest possible Bayes factor
+for the point null hypothesis against the alternative
+within the specified class of alternatives.
+
 The function \code{pCalibrate()} provides transformations (called calibrations in the sequel) 
 for two-sided P-values
 which consider the P-value as the data and are directly based on the distribution of the P-value 
@@ -29,9 +31,9 @@ Type: Package
 
 Title: Bayesian Calibrations of P-Values
 
-Version: 0.1-2
+Version: 0.1-3
 
-Date: 2017-11-04
+Date: 2017-11-05
 
 Author: Manuela Ott [aut, cre], Leonhard Held [aut] 
 

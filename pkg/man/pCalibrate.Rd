@@ -5,9 +5,8 @@
 %%  ~~function to do ... ~~
 }
 \description{
-    Transforms a two-sided P-value to a lower bound on the Bayes factor
-    for the point null hypothesis against the composite alternative.
-    That Bayes factor is obtained by modelling the distributions
+    Transforms a two-sided P-value to a minimum Bayes factor.
+    That minimum Bayes factor is obtained by modelling the distributions
     of the P-value under the null and the alternative hypothesis,
     respectively.
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
@@ -30,7 +29,7 @@ pCalibrate(p,  alternative="noninformative", transform="id")
     \item{transform}{
   either \code{"id"}, \code{"log"}, \code{"log2"}  or \code{"log10"}.
   Defaults to \code{"id"}.
-  Specifies how to transform the lower bound on the Bayes factor.
+  Specifies how to transform the minimum Bayes factor(s).
   \code{"id"} corresponds to no transformation.
   \code{"log"} refers to the natural logarithm, \code{"log2"} to the logarithm
   to the base 2 and \code{"log10"} to the logarithm
@@ -46,12 +45,12 @@ pCalibrate(p,  alternative="noninformative", transform="id")
       the  the so-called "- e q log(q)" calibration with q=1-p (Held & Ott, 2017)
       is applied.
   
-      \code{alternative="noniformative"} gives a larger bound than \code{alternative="informative"}.
+      \code{alternative="noniformative"} gives a larger minimum Bayes factor than \code{alternative="informative"}.
       
       Under the null hypothesis, the distribution of the P-value
       is assumed to be uniform.
       Under the alternative, the P-value is assumed to have a beta-distribution
-      with monotonically decreasing density function in both methods,
+      with monotonically decreasing density function under both alternatives,
       with different parameters however.
       If \code{alternative="noniformative"}, the prior sample size
       does not exceed 2, whereas for \code{alternative="informative"},
@@ -65,7 +64,7 @@ pCalibrate(p,  alternative="noninformative", transform="id")
 %%  ~~ If necessary, more details than the description above ~~
 }
 \value{
-A numeric vector of the lower bounds on the Bayes factor for the specified P-values
+A numeric vector of minimum Bayes factors for the specified P-values
 }
 \references{
 Held, L. and Ott, M. (2017). On p-values and Bayes factors.
@@ -74,7 +73,7 @@ Held, L. and Ott, M. (2017). On p-values and Bayes factors.
 Sellke, T., Bayarri, M. J. and Berger, J. O. (2001). Calibration of p values for testing precise null hypotheses.
 \emph{The American Statistician}, \bold{55}, 62--71.
 
-Vovk, V. G. (1993). A logic of probability, with application to the foundations of statistics (with discussion and a reply by the author). \emph{Journal of the Royal Statistical Society Series B}, \bold{55}, 317--351.
+Vovk, V. G. (1993). A logic of probability, with application to the foundations of statistics (with discussion and a reply by the author). \emph{Journal of the Royal Statistical Society, Series B}, \bold{55}, 317--351.
 %% ~put references to the literature/web site here ~
 }
 %\author{

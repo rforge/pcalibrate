@@ -1,13 +1,11 @@
 \name{twoby2Calibrate}
 \alias{twoby2Calibrate}
 %- Also NEED an '\alias' for EACH other topic documented here.
-\title{
-    Minimum Bayes factors and P-values from Fisher's exact test for 2x2 contingency tables
+\title{Minimum Bayes factors and P-values from Fisher's exact test for 2x2 contingency tables
 %%  ~~function to do ... ~~
 }
 \description{
-    Computes a sample-size adjusted lower bound on the Bayes factor
-    (for the point null hypothesis against the alternative) 
+    Computes a sample-size adjusted minimum Bayes factor
     for the given 2x2 contingency table.
     Also returns P-values from Fisher's exact test
     (different versions in the two-sided case) and less conservative
@@ -47,7 +45,7 @@ twoby2Calibrate(x, type="two.sided", alternative="normal", direction=NULL,
     \item{transform.bf}{
   either \code{"id"}, \code{"log"}, \code{"log2"}  or \code{"log10"}.
   Defaults to \code{"id"}.
-  Specifies how to transform the lower bound on the Bayes factor.
+  Specifies how to transform the minimum Bayes factor.
   \code{"id"} corresponds to no transformation.
   \code{"log"} refers to the natural logarithm, \code{"log2"} to the logarithm
   to the base 2 and \code{"log10"} to the logarithm
@@ -66,15 +64,15 @@ twoby2Calibrate(x, type="two.sided", alternative="normal", direction=NULL,
   
   In the one-sided case (\code{type="one.sided"}), \code{direction="less"} tests the alternative that the odds ratio is
   less than 1 and considers simple point alternatives in that direction
-  to compute the lower bound on the Bayes factor.
+  to compute the minimum Bayes factor.
   \code{"greater"} does the same for the alternative that the odds ratio is
   larger than 1.
   
   The calibration obtained with \code{type="two.sided", alternative="normal"} is based on
   the methodology proposed in Li & Clyde (2016) 
-  and yields an (approximate) lower bound on the Bayes factor
+  and yields an (approximate) minimum Bayes factor
   in closed form.
-  All the other lower bounds on the Bayes factor
+  All the other minimum Bayes factors
   are computed by numerical optimization.
   For \code{type="two.sided"},
   the two calibrations are described in Ott & Held (2017).
@@ -130,7 +128,7 @@ in the package \code{epitools}.
  as a modification of the corresponding one-sided significance measure.
 }
 \value{A list of the following two elements:
-\item{minBF }{the lower bound on the Bayes factor}
+\item{minBF }{the minimum Bayes factor}
 \item{p.value }{A vector of 3 one-sided P-values/significance measures
 for one-sided tests,
 namely first the P-value \code{p.fi} from Fisher's exact test,

@@ -6,8 +6,7 @@
 %%  ~~function to do ... ~~
 }
 \description{
-    Transforms one- and two-sided P-values from t-tests to sample-size adjusted lower bounds on the Bayes factor
-    for the point null hypothesis against the alternative.
+    Transforms one- and two-sided P-values from t-tests to sample-size adjusted minimum Bayes factors.
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
 \usage{
@@ -38,7 +37,7 @@ tCalibrate(p, n, type="two.sided", alternative="normal", transform="id")
   \item{transform}{
   either \code{"id"}, \code{"log"}, \code{"log2"}  or \code{"log10"}.
   Defaults to \code{"id"}.
-  Specifies how to transform the lower bound on the Bayes factor.
+  Specifies how to transform the minimum Bayes factor(s).
   \code{"id"} corresponds to no transformation.
   \code{"log"} refers to the natural logarithm, \code{"log2"} to the logarithm
   to the base 2 and \code{"log10"} to the logarithm
@@ -56,7 +55,7 @@ tCalibrate(p, n, type="two.sided", alternative="normal", transform="id")
   all local normal distributions centered around the null value.
   
   Note that for \code{alternative="normal"},
- the lower bound on the Bayes factor is the same for 
+  the minimum Bayes factor is the same for 
  one-sided and two-sided P-values.
  
     For \code{type="one.sided", alternative="simple"}, the calibration is available
@@ -67,22 +66,22 @@ tCalibrate(p, n, type="two.sided", alternative="normal", transform="id")
     numerical optimization and is given in Held & Ott (2017), 
     equations (17) and (18).
     
-    For \code{alternative="normal"}, the corresponding lower bound on the Bayes factor has been derived in Johnson (2005) and the calibration is proposed in Held & Ott (2016), Section 3.
+    For \code{alternative="normal"}, the corresponding minimum Bayes factor has been derived in Johnson (2005) and the calibration is proposed in Held & Ott (2016), Section 3.
   
     If \code{alternative="normal"}, \code{tCalibrate()} is a special case of
-    \code{FCalibrate()}, i.e.
+    \code{FCalibrate()}, i.e. \cr
      \code{tCalibrate(p, n, alternative="normal")}
      is equivalent to \cr
      \code{FCalibrate(p, n, d=1, alternative="normal")}.
     
     One can show that if one considers the class of all alternatives
 which are symmetric with respect to the null value,
-one obtains the same lower bound as for the subclass of all
+one obtains the same minimum Bayes factor as for the subclass of all
 symmetric two-point distributions.
 %%  ~~ If necessary, more details than the description above ~~
 }
 \value{
-    A matrix containing the lower bounds on the Bayes factors 
+    A matrix containing the minimum Bayes factors 
     as entries,
     for all combinations of P-value and sample size.
     The values for the k-th sample size (k-th entry in the vector \code{n}) and 
@@ -104,7 +103,7 @@ Held, L. and Ott, M. (2016). How the maximal evidence of P-values against point 
 on sample size. \emph{The American Statistician}, \bold{70}, 335--341.
 
 Johnson, V. E. (2005). Bayes factors based on test statistics. 
- \emph{Journal of the Royal Statistical Society, Series B} \bold{67}:689--701.
+ \emph{Journal of the Royal Statistical Society, Series B}, \bold{67}, 689--701.
 %% ~put references to the literature/web site here ~
 }
 %\author{
@@ -134,7 +133,7 @@ par(mfrow=c(1,2), pty="s", las=1)
 p <- exp(seq(log(0.0001), log(0.3), by=0.01))
 n <- c(10, 20, 50)
 minBF <- tCalibrate(p, n, alternative = "simple")
-# compare to the bound for large n
+# compare to the minimum Bayes factor for large n
 bound1 <- zCalibrate(p, alternative="simple")
 matplot(p, t(minBF), ylim=c(0.0003, 1), type="l", ylab="Min. Bayes factor", log="xy", 
         xlab="two-sided t-test P-value", lty=1, lwd=2, axes=FALSE, 

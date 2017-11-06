@@ -6,8 +6,7 @@
 %%  ~~function to do ... ~~
 }
 \description{
-    Transforms two-sided P-values from likelihood ratio (deviance) tests to lower bounds on the Bayes factor
-    for the point null hypothesis against the alternative.
+    Transforms two-sided P-values from likelihood ratio (deviance) tests to minimum Bayes factors.
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
 \usage{
@@ -36,7 +35,7 @@ LRCalibrate(p, df, alternative="gamma", transform="id")
     \item{transform}{
   either \code{"id"}, \code{"log"}, \code{"log2"}  or \code{"log10"}.
   Defaults to \code{"id"}.
-  Specifies how to transform the lower bound on the Bayes factor.
+  Specifies how to transform the minimum Bayes factor(s).
   \code{"id"} corresponds to no transformation.
   \code{"log"} refers to the natural logarithm, \code{"log2"} to the logarithm
   to the base 2 and \code{"log10"} to the logarithm
@@ -53,7 +52,7 @@ LRCalibrate(p, df, alternative="gamma", transform="id")
      the distribution of the deviance converges to a
     non-central chi-squared distribution with \code{df} degrees of freedom.
     
-    For \code{alternative = "simple"}, the lower bound on the Bayes factor
+    For \code{alternative = "simple"}, the minimum Bayes factor
     is obtained by mazimizing the
     density function of the (asymptotic) non-central chi-squared distribution under the alternative
     with respect to the non-centrality parameter.
@@ -64,13 +63,13 @@ LRCalibrate(p, df, alternative="gamma", transform="id")
     introduced in Johnson (2008).
     That approach is also outlined in Held and Ott (2017), Section 4.2.2.
     
-    Using \code{alternative = "gamma"} yields a larger bound than
+    Using \code{alternative = "gamma"} yields a larger minimum Bayes factor than
     \code{alternative = "simple"}.
     Typical applications of these calibrations include generalized linear models.
 %%  ~~ If necessary, more details than the description above ~~
 }
 \value{
-    A matrix containing the lower bounds on the Bayes factors 
+    A matrix containing the minimum Bayes factors 
     as entries,
     for all combinations of P-value and degrees of freedom.
     The values for the k-th degrees of freedom (k-th entry in the vector \code{df}) and the different P-values

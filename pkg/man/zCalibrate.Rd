@@ -8,8 +8,7 @@
 %%  ~~function to do ... ~~
 }
 \description{
-    Transforms one- and two-sided P-values from z-tests to a lower bound on the Bayes factor
-    for the point null hypothesis against the alternative.
+    Transforms one- and two-sided P-values from z-tests to minimum Bayes factors.
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
 \usage{
@@ -33,7 +32,7 @@ zCalibrate(p, type="two.sided", alternative="normal", transform="id")
     \item{transform}{
   either \code{"id"}, \code{"log"}, \code{"log2"}  or \code{"log10"}.
   Defaults to \code{"id"}.
-  Specifies how to transform the lower bound on the Bayes factor.
+  Specifies how to transform the minimum Bayes factor(s).
   \code{"id"} corresponds to no transformation.
   \code{"log"} refers to the natural logarithm, \code{"log2"} to the logarithm
   to the base 2 and \code{"log10"} to the logarithm
@@ -57,7 +56,7 @@ zCalibrate(p, type="two.sided", alternative="normal", transform="id")
  
 
  Note that for \code{alternative="normal"} and \code{alternative="local"},
- the lower bound on the Bayes factor is the same for \code{type="one.sided"} and 
+ the minimum Bayes factor is the same for \code{type="one.sided"} and 
  \code{type="two.sided"}.
  
 For \code{type="one.sided", alternative="simple"} and for \code{alternative="normal"},
@@ -68,16 +67,16 @@ Most of these calibrations are also described in Held & Ott (2017).
 
 
 Note that if one considers the class of all alternatives,
-the resulting lower bound on the Bayes factor is the same as for 
+the resulting minimum Bayes factor is the same as for 
 \code{type="one.sided", alternative="simple"}.
 
 One can show that if one considers the class of all alternatives
 which are symmetric around the null value,
-one obtains the same lower bound as for the subclass of all
+one obtains the same minimum Bayes factor as for the subclass of all
 symmetric two-point distributions (Berger & Sellke, 1987).
 }
 \value{
-    A numeric vector of the lower bounds on the Bayes factor for the specified P-values 
+    A numeric vector of minimum Bayes factors for the specified P-values 
 %%  ~Describe the value returned
 %%  If it is a LIST, use
 %%  \item{comp1 }{Description of 'comp1'}

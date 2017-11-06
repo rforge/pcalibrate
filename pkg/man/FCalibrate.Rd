@@ -6,8 +6,7 @@ Calibration of two-sided P-values from the F-test in the linear model
 %%  ~~function to do ... ~~
 }
 \description{
-      Transforms two-sided P-values from the F-test of overall significance in the linear model to sample-size adjusted lower bounds on the Bayes factor
-    for the point null hypothesis against the alternative.
+      Transforms two-sided P-values from the F-test of overall significance in the linear model to sample-size adjusted minimum Bayes factors.
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
 \usage{
@@ -38,7 +37,7 @@ FCalibrate(p, n, d, alternative="chi.squared", intercept=TRUE, transform="id")
     \item{transform}{
   either \code{"id"}, \code{"log"}, \code{"log2"}  or \code{"log10"}.
   Defaults to \code{"id"}.
-  Specifies how to transform the lower bound on the Bayes factor.
+  Specifies how to transform the minimum Bayes factor(s).
   \code{"id"} corresponds to no transformation.
   \code{"log"} refers to the natural logarithm, \code{"log2"} to the logarithm
   to the base 2 and \code{"log10"} to the logarithm
@@ -54,9 +53,9 @@ FCalibrate(p, n, d, alternative="chi.squared", intercept=TRUE, transform="id")
   (otherwise \eqn{F}
   has a central F-distribution with \eqn{d} and \eqn{n-d} degrees of freedom).
   Under a simple point alternative, 
-  F has a non-central F-distribution with \eqn{d} and \eqn{n-d-1} degrees of freedom. 
+  \eqn{F} has a non-central F-distribution with \eqn{d} and \eqn{n-d-1} degrees of freedom. 
   
-  To obtain the lower bound on the Bayes factor 
+  To obtain the minimum Bayes factor 
   for \code{alternative="simple"},
   the likelihood under the alternative is then maximized numerically with respect to
   the non-centrality parameter.
@@ -79,7 +78,7 @@ centered around the null value to the vector of regression coefficients.
     the returned value is \code{minBF=NaN}.
 }
 \value{
-     A matrix containing the lower bounds on the Bayes factors 
+     A matrix containing the minimum Bayes factors 
      as entries,
     for all combinations of P-value and sample size \code{n} or dimension \code{d}
     (whichever is multidimensional).
@@ -93,7 +92,7 @@ Held, L. and Ott, M. (2017). On p-values and Bayes factors.
  To appear in \emph{Annual Review of Statistics and Its Application, Volume 5}.
  
 Johnson, V. E. (2005). Bayes factors based on test statistics. 
- \emph{Journal of the Royal Statistical Society, Series B} \bold{67}:689--701.
+ \emph{Journal of the Royal Statistical Society, Series B}, \bold{67}, 689--701.
 %% ~put references to the literature/web site here ~
 }
 %\author{
@@ -122,12 +121,12 @@ FCalibrate(p=c(0.05, 0.01, 0.005), n=c(10, 20, 50), d=2)
 p <- exp(seq(log(0.0001), log(0.3), by=0.01))
 n <- c(5, 10, 20)
 minBF <- FCalibrate(p, n, d=2) 
-# compare to the bound for large n
+# compare to the minimum Bayes factor for large n
 minTBF <- LRCalibrate(p, df=2)
 par(las=1)
 matplot(p, t(minBF), ylim=c(0.0003, 1), type="l", ylab="Minimum Bayes factor", log="xy", 
         xlab="two-sided F-test P-value", lty=1, lwd=2, axes=FALSE, 
-        main="Local normal alternatives")
+        main="Local normal alternatives, d=2")
 lines(p, minTBF, col="gray", lty=2, lwd=2)
 axis(1, at=c(0.0001, 0.0003, 0.001, 0.003, 0.01, 0.03, 0.1, 0.3), 
      as.character(c(format(c(0.0001,0.0003), nsmall=4, digits=4, scientific=FALSE), 
