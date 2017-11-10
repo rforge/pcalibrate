@@ -31,7 +31,7 @@ Type: Package
 
 Title: Bayesian Calibrations of P-Values
 
-Version: 0.1-1
+Version: 0.1-2
 
 Date: 2017-11-05
 
