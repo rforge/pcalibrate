@@ -2,11 +2,12 @@
 \alias{tCalibrate}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-    Calibration of P-values from t-tests
+    Calibration of p-values from t-tests
 %%  ~~function to do ... ~~
 }
 \description{
-    Transforms one- and two-sided P-values from t-tests to sample-size adjusted minimum Bayes factors.
+    Transforms one- and two-sided p-values from t-tests to sample-size adjusted lower bounds on the Bayes factor
+    for the point null hypothesis against the alternative.
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
 \usage{
@@ -15,7 +16,7 @@ tCalibrate(p, n, type="two.sided", alternative="normal", transform="id")
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{p}{
-    a vector of P-values
+    a vector of p-values
 %%     ~~Describe \code{p} here~~
 }
   \item{n}{
@@ -25,7 +26,7 @@ tCalibrate(p, n, type="two.sided", alternative="normal", transform="id")
   \item{type}{
    either \code{"one.sided"} or \code{"two.sided"}.
   Defaults to \code{"two.sided"}.
-  Specifies if the t-test (and the corresponding P-value) is one-sided or two-sided.
+  Specifies if the t-test (and the corresponding p-value) is one-sided or two-sided.
 }
   \item{alternative}{
   either \code{"simple"} or  \code{"normal"}.
@@ -37,7 +38,7 @@ tCalibrate(p, n, type="two.sided", alternative="normal", transform="id")
   \item{transform}{
   either \code{"id"}, \code{"log"}, \code{"log2"}  or \code{"log10"}.
   Defaults to \code{"id"}.
-  Specifies how to transform the minimum Bayes factor(s).
+  Specifies how to transform the lower bound on the Bayes factor.
   \code{"id"} corresponds to no transformation.
   \code{"log"} refers to the natural logarithm, \code{"log2"} to the logarithm
   to the base 2 and \code{"log10"} to the logarithm
@@ -46,46 +47,47 @@ tCalibrate(p, n, type="two.sided", alternative="normal", transform="id")
 }
 \details{
   For one-sided t-tests (\code{type="one.sided"}), \code{alternative="simple"} considers all simple
- point alternatives for the mean and \code{alternative="normal"} all shifted and possibly mirrored (if \code{direction=less})
+ point alternatives for the mean and \code{alternative="normal"} all shifted and possibly mirrored \cr
+ (if \code{direction=less})
  half-normal distributions with mode at the null value.
  
   For two-sided t-tests (\code{type="two.sided"}), \code{alternative="simple"} considers all
   two-point distributions on the mean
-  which are symmetric with respect to the null value and \code{alternative="normal"} 
+  which are symmetric with respect to the null value and \cr
+  \code{alternative="normal"} 
   all local normal distributions centered around the null value.
   
   Note that for \code{alternative="normal"},
-  the minimum Bayes factor is the same for 
- one-sided and two-sided P-values.
+ the lower bound on the Bayes factor is the same for 
+ one-sided and two-sided p-values.
  
     For \code{type="one.sided", alternative="simple"}, the calibration is available
-    in closed form and is given in Held & Ott (2017), 
+    in closed form and is given in Held & Ott (2018), 
     equation (19).
     
     For \code{type="two.sided", alternative="simple"}, the calibration needs to be computed by
-    numerical optimization and is given in Held & Ott (2017), 
+    numerical optimization and is given in Held & Ott (2018), 
     equations (17) and (18).
     
-    For \code{alternative="normal"}, the corresponding minimum Bayes factor has been derived in Johnson (2005) and the calibration is proposed in Held & Ott (2016), Section 3.
+    For \code{alternative="normal"}, the corresponding lower bound on the Bayes factor has been derived in Johnson (2005) and the calibration is proposed in Held & Ott (2016), Section 3.
   
-    If \code{alternative="normal"}, \code{tCalibrate()} is a special case of
-    \code{FCalibrate()}, i.e. \cr
-     \code{tCalibrate(p, n, alternative="normal")}
+  If \code{alternative="normal"}, \code{tCalibrate()} is a special case of
+    \code{FCalibrate()}, i.e. \cr \code{tCalibrate(p, n, alternative="normal")}
      is equivalent to \cr
-     \code{FCalibrate(p, n, d=1, alternative="normal")}.
+     \code{FCalibrate(p, n, d=1, alternative="chi.squared")}.
     
     One can show that if one considers the class of all alternatives
 which are symmetric with respect to the null value,
-one obtains the same minimum Bayes factor as for the subclass of all
+one obtains the same lower bound as for the subclass of all
 symmetric two-point distributions.
 %%  ~~ If necessary, more details than the description above ~~
 }
 \value{
-    A matrix containing the minimum Bayes factors 
+    A matrix containing the lower bounds on the Bayes factors 
     as entries,
-    for all combinations of P-value and sample size.
+    for all combinations of p-value and sample size.
     The values for the k-th sample size (k-th entry in the vector \code{n}) and 
-    the specified P-values
+    the specified p-values
     are given in the k-th row.
     %    (for the point null hypothesis against the composite alternative)
 %    over all considered alternatives 
@@ -96,18 +98,18 @@ symmetric two-point distributions.
 %% ...
 }
 \references{
-Held, L. and Ott, M. (2017). On p-values and Bayes factors.
- To appear in \emph{Annual Review of Statistics and Its Application, Volume 5}.
+Held, L. and Ott, M. (2018). On p-values and Bayes factors.
+\emph{Annual Review of Statistics and Its Application}, \bold{5}, 393--419.
 
 Held, L. and Ott, M. (2016). How the maximal evidence of P-values against point null hypotheses depends
 on sample size. \emph{The American Statistician}, \bold{70}, 335--341.
 
 Johnson, V. E. (2005). Bayes factors based on test statistics. 
- \emph{Journal of the Royal Statistical Society, Series B}, \bold{67}, 689--701.
+ \emph{Journal of the Royal Statistical Society, Series B} \bold{67}:689--701.
 %% ~put references to the literature/web site here ~
 }
 %\author{
-%%  ~~who you are~~
+%Manuela Ott
 %}
 %\note{
 %%  ~~further notes~~
@@ -120,32 +122,36 @@ Johnson, V. E. (2005). Bayes factors based on test statistics.
 %% ~~objects to See Also as \code{\link{help}}, ~~~
 }
 \examples{
-tCalibrate(p=c(0.05, 0.01, 0.005), n=10, type="one.sided", alternative="simple")
+tCalibrate(p=c(0.05, 0.01, 0.005), n=10, type="one.sided", 
+           alternative="simple")
 # two-sided alternatives
 tCalibrate(p=c(0.05, 0.01, 0.005), n=20, alternative="simple")
 tCalibrate(p=c(0.05, 0.01, 0.005), n=c(10, 20, 50))
 
 # for two-sided alternatives, plot the minimum Bayes factors 
-# as a function of the P-value
+# as a function of the p-value
 par(mfrow=c(1,2), pty="s", las=1)
 
 # plot for simple alternatives
 p <- exp(seq(log(0.0001), log(0.3), by=0.01))
 n <- c(10, 20, 50)
 minBF <- tCalibrate(p, n, alternative = "simple")
-# compare to the minimum Bayes factor for large n
+# compare to the bound for large n
 bound1 <- zCalibrate(p, alternative="simple")
-matplot(p, t(minBF), ylim=c(0.0003, 1), type="l", ylab="Min. Bayes factor", log="xy", 
-        xlab="two-sided t-test P-value", lty=1, lwd=2, axes=FALSE, 
-        main="Simple alternative")
+matplot(p, t(minBF), ylim=c(0.0003, 1), type="l", 
+        ylab="Min. Bayes factor", log="xy", 
+        xlab="two-sided t-test p-value", lty=1, lwd=2, 
+        axes=FALSE, main="Simple alternative")
 lines(p, bound1, col="gray", lty=2, lwd=2)
 my.at1 <- c(0.0001, 0.0003, 0.001, 0.003, 0.01, 0.03, 0.1, 0.3)
-my.values1 <- as.character(c(format(c(0.0001,0.0003), nsmall=4, digits=4, scientific=FALSE), 
-                    c(0.001, 0.003, 0.01, 0.03, 0.1, 0.3)))
+my.values1 <- as.character(c(format(c(0.0001,0.0003), nsmall=4, 
+                                    digits=4, scientific=FALSE), 
+                           c(0.001, 0.003, 0.01, 0.03, 0.1, 0.3)))
 axis(1, at=my.at1, labels=my.values1)
 my.values2 <- c(3000, 1000, 300, 100, 30, 10, 3, 1)
 my.at2 <- 1/my.values2
-my.ylegend2 <- c(paste("1/", my.values2[-length(my.values2)], sep=""), "1")
+my.ylegend2 <- c(paste("1/", my.values2[-length(my.values2)], sep=""), 
+                 "1")
 axis(2, at=my.at2, labels=my.ylegend2)
 box()
 legend("bottomright", legend=rev(c("n=10", "n=20", "n=50", "n large")), 
@@ -156,9 +162,10 @@ p <- exp(seq(log(0.0001), log(0.3), by=0.01))
 n <- c(10, 20, 50)
 minBF <- tCalibrate(p, n)
 bound2 <- zCalibrate(p)
-matplot(p, t(minBF), ylim=c(0.0003, 1), type="l", ylab="Min. Bayes factor", log="xy", 
-        xlab="two-sided t-test P-value", lty=1, lwd=2, axes=FALSE, 
-        main="Local normal alternatives")
+matplot(p, t(minBF), ylim=c(0.0003, 1), type="l", 
+        ylab="Min. Bayes factor", log="xy", 
+        xlab="two-sided t-test p-value", lty=1, lwd=2, 
+        axes=FALSE, main="Local normal alternatives")
 lines(p, bound2, col="gray", lty=2, lwd=2)
 axis(1, at=my.at1, labels=my.values1)
 axis(2, at=my.at2, my.ylegend2)

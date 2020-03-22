@@ -1,28 +1,30 @@
 \name{zCalibrate}
 \alias{zCalibrate}
-%\name{z.pCalibrate}
-%\alias{z.pCalibrate}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-    Calibration of P-values from z-tests
+    Calibration of p-values from z-tests
 %%  ~~function to do ... ~~
 }
 \description{
-    Transforms one- and two-sided P-values from z-tests to minimum Bayes factors.
+    Transforms one- and two-sided p-values from z-tests to minimum Bayes factors.
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
 \usage{
-zCalibrate(p, type="two.sided", alternative="normal", transform="id")
+zCalibrate(p=NULL, z=p2z(p), type="two.sided",  
+           alternative="normal", transform="id")
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{p}{a vector of P-values
+  \item{p}{a vector of p-values, default is \code{NULL}
+%%     ~~Describe \code{p} here~~
+}
+  \item{z}{a vector of z-values, is calculated from \code{p}, if necessary.
 %%     ~~Describe \code{p} here~~
 }
    \item{type}{
    either \code{"one.sided"} or \code{"two.sided"}.
   Defaults to \code{"two.sided"}.
-  Specifies if the z-test (and the corresponding P-value) is one-sided or two-sided.
+  Specifies if the z-test (and the corresponding p-value) is one-sided or two-sided.
 }
   \item{alternative}{either \code{"simple"}, \code{"normal"} or \code{"local"}.
   Defaults to \code{"normal"}.
@@ -49,9 +51,9 @@ zCalibrate(p, type="two.sided", alternative="normal", transform="id")
  
   For two-sided z-tests (\code{type="two.sided"}), \code{alternative="simple"} considers all
   two-point distributions on the mean
-  which are symmetric with respect to the null value, \code{alternative="normal"} 
+  which are symmetric with respect to the null value, \cr \code{alternative="normal"} 
   all normal distributions centered around the null value and 
- \code{alternative="local"} all unimodal symmetric distributions with respect the null value
+ \cr \code{alternative="local"} all unimodal symmetric distributions with respect the null value
  (i.e. these distributions are non-increasing as a function of the distance to the null value).
  
 
@@ -63,7 +65,7 @@ For \code{type="one.sided", alternative="simple"} and for \code{alternative="nor
 the calibrations have closed-form expressions and were proposed in Edwards et al. (1963).\cr
   For \code{type="two.sided", alternative="simple"}  and for \code{alternative="local"}, the calibrations need to be computed by numerical optimization and were derived in 
 Berger & Sellke (1987). 
-Most of these calibrations are also described in Held & Ott (2017).
+Most of these calibrations are also described in Held & Ott (2018).
 
 
 Note that if one considers the class of all alternatives,
@@ -76,7 +78,7 @@ one obtains the same minimum Bayes factor as for the subclass of all
 symmetric two-point distributions (Berger & Sellke, 1987).
 }
 \value{
-    A numeric vector of minimum Bayes factors for the specified P-values 
+    A numeric vector of minimum Bayes factors for the specified p-values 
 %%  ~Describe the value returned
 %%  If it is a LIST, use
 %%  \item{comp1 }{Description of 'comp1'}
@@ -90,22 +92,24 @@ values and evidence (with discussion). \emph{Journal of the American Statistical
     Edwards, W., Lindman, H. and Savage, L. J. (1963). Bayesian statistical inference for psychological research. 
     \emph{Psychological Review}, \bold{70}, 193--242.
     
-Held, L. and Ott, M. (2017). On p-values and Bayes factors.
- To appear in \emph{Annual Review of Statistics and Its Application, Volume 5}.
+Held, L. and Ott, M. (2018). On p-values and Bayes factors.
+\emph{Annual Review of Statistics and Its Application}, \bold{5}, 393--419.
 %% ~put references to the literature/web site here ~
 }
 %\author{
-%%  ~~who you are~~
+%Manuela Ott
 %}
-%\note{
+\note{
+For small p-values, using the corresponding z-value
+as an argument instead of the p-value may lead to more accurate computations.
 %%  ~~further notes~~
-%}
+}
 
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
 \code{\link{tCalibrate}} 
- for sample-size adjusted calibrations of P-values from t-tests
+ for sample-size adjusted calibrations of p-values from t-tests
 %% ~~objects to See Also as \code{\link{help}}, ~~~
 }
 \examples{  
@@ -113,12 +117,15 @@ Held, L. and Ott, M. (2017). On p-values and Bayes factors.
 zCalibrate(p=c(0.05, 0.01, 0.005), alternative="simple")
 zCalibrate(p=c(0.05, 0.01, 0.005))
 zCalibrate(p=c(0.05, 0.01, 0.005), alternative="local")
+zCalibrate(z=c(2, 3, 4), alternative="local")
 # one-sided alternatives
-zCalibrate(p=c(0.05, 0.01, 0.005), type="one.sided", alternative="simple")
+zCalibrate(p=c(0.05, 0.01, 0.005), type="one.sided", 
+           alternative="simple")
 zCalibrate(p=c(0.05, 0.01, 0.005), type="one.sided")
-zCalibrate(p=c(0.05, 0.01, 0.005), type="one.sided", alternative="local")
+zCalibrate(p=c(0.05, 0.01, 0.005), type="one.sided", 
+           alternative="local")
 
-# plot the different calibrations as a function of the P-value
+# plot the different calibrations as a function of the p-value
 par(las=1)
 p <- exp(seq(log(0.0001), log(0.3), by=0.01))
 minBF <- matrix(NA, ncol=4, nrow=length(p))
@@ -127,10 +134,11 @@ minBF[ ,2] <- zCalibrate(p, type="two.sided", alternative="local")
 minBF[ ,3] <- zCalibrate(p, type="two.sided", alternative="simple")
 minBF[ ,4] <- zCalibrate(p, type="one.sided", alternative="simple")
 matplot(p, minBF, type="l", ylab="Minimum Bayes factor", log="xy", 
-        xlab="z-test P-value", lty=1, lwd=2, col=c(1,3,2,4), axes=FALSE)
+        xlab="z-test p-value", lty=1, lwd=2, col=c(1,3,2,4), axes=FALSE)
 axis(1, at=c(0.0001, 0.0003, 0.001, 0.003, 0.01, 0.03, 0.1, 0.3), 
-     as.character(c(format(c(0.0001,0.0003), nsmall=4, digits=4, scientific=FALSE), 
-                    c(0.001, 0.003, 0.01, 0.03, 0.1, 0.3))))
+     as.character(c(format(c(0.0001,0.0003), nsmall=4, digits=4, 
+                  scientific=FALSE), 
+                  c(0.001, 0.003, 0.01, 0.03, 0.1, 0.3))))
 my.values <- c(3000, 1000, 300, 100, 30, 10, 3, 1)
 my.at <- 1/my.values
 my.ylegend <- c(paste("1/", my.values[-length(my.values)], sep=""), "1")

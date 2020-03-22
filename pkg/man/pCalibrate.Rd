@@ -1,29 +1,32 @@
 \name{pCalibrate}
 \alias{pCalibrate}
 %- Also NEED an '\alias' for EACH other topic documented here.
-\title{Calibrations of two-sided P-values directly based on the P-value
+\title{Calibrations of two-sided p-values directly based on the p-value
 %%  ~~function to do ... ~~
 }
 \description{
-    Transforms a two-sided P-value to a minimum Bayes factor.
+    Transforms a two-sided p-value to a minimum Bayes factor.
     That minimum Bayes factor is obtained by modelling the distributions
-    of the P-value under the null and the alternative hypothesis,
+    of the p-value under the null and the alternative hypothesis,
     respectively.
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
 \usage{
-pCalibrate(p,  alternative="noninformative", transform="id")
+pCalibrate(p,  type="exploratory", transform="id")
+%pCalibrate(p,  alternative="noninformative", transform="id")
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{p}{
-  a vector of two-sided P-values
+  a vector of two-sided p-values
 %%     ~~Describe \code{p} here~~
 }
-  \item{alternative}{
-  either \code{"noniformative"} or \code{"informative"}.
-  Defaults to \code{"noniformative"}.
-  Corresponds to different distrbutional assumptions for the P-value p
+  \item{type}{
+   either \code{"exploratory"} or \code{"confirmatory"}.
+  Defaults to \code{"exploratory"}.
+ % either \code{"noniformative"} or \code{"informative"}.
+ % Defaults to \code{"noniformative"}.
+  Corresponds to different distrbutional assumptions for the p-value p
   under the alternative.
 }
     \item{transform}{
@@ -37,38 +40,45 @@ pCalibrate(p,  alternative="noninformative", transform="id")
 }
 }
 \details{
-      If \code{alternative="noniformative"} is used,
+      If \code{type="exploratory"} is used,
       the so-called "- e p log(p)" calibration (Sellke et al., 2001)
       is applied.
       
-      If \code{alternative="informative"} is used,
-      the  the so-called "- e q log(q)" calibration with q=1-p (Held & Ott, 2017)
+      If \code{type="confirmatory"} is used,
+      the  the so-called "- e q log(q)" calibration with q=1-p (Held & Ott, 2018)
       is applied.
   
-      \code{alternative="noniformative"} gives a larger minimum Bayes factor than \code{alternative="informative"}.
+      \code{type="exploratory"} gives a larger minimum Bayes factor than \code{type="confirmatory"}.
       
-      Under the null hypothesis, the distribution of the P-value
+      Under the null hypothesis, the distribution of the p-value
       is assumed to be uniform.
-      Under the alternative, the P-value is assumed to have a beta-distribution
+      Under the alternative, the p-value is assumed to have a beta-distribution
       with monotonically decreasing density function under both alternatives,
       with different parameters however.
-      If \code{alternative="noniformative"}, the prior sample size
-      does not exceed 2, whereas for \code{alternative="informative"},
+      If \code{type="exploratory"}, the prior sample size
+      does not exceed 2, whereas for \code{type="confirmatory"},
       the prior sample size is at least 2.
       The latter calibration may be appropriate for small sample size,
-      but for larger sample size it is too conservative (Held & Ott, 2017).
+      but for larger sample size it is too conservative (Held & Ott, 2018).
       
       Note that for the "- e p log(p)" calibration,
       alternative derivations which do not assume a beta-distribution under the
       alternative have also been given, see Sellke et al. (2001).
 %%  ~~ If necessary, more details than the description above ~~
 }
+\note{
+    The argument \code{type} replaces the argument \code{alternative}
+    in version 0.1-1 of this package. \cr
+    \code{type="exploratory"} corresponds to \code{alternative="noninformative"}
+    and \cr
+    \code{type="confirmatory"} corresponds to \code{alternative="informative"}.
+}
 \value{
-A numeric vector of minimum Bayes factors for the specified P-values
+A numeric vector of minimum Bayes factors for the specified p-values
 }
 \references{
-Held, L. and Ott, M. (2017). On p-values and Bayes factors.
- To appear in \emph{Annual Review of Statistics and Its Application, Volume 5}.
+Held, L. and Ott, M. (2018). On p-values and Bayes factors.
+\emph{Annual Review of Statistics and Its Application}, \bold{5}, 393--419.
  
 Sellke, T., Bayarri, M. J. and Berger, J. O. (2001). Calibration of p values for testing precise null hypotheses.
 \emph{The American Statistician}, \bold{55}, 62--71.
@@ -77,7 +87,7 @@ Vovk, V. G. (1993). A logic of probability, with application to the foundations 
 %% ~put references to the literature/web site here ~
 }
 %\author{
-%%  ~~who you are~~
+%Manuela Ott
 %}
 %\note{
 %%  ~~further notes~~
@@ -90,20 +100,21 @@ Vovk, V. G. (1993). A logic of probability, with application to the foundations 
 %}
 \examples{
 pCalibrate(p=c(0.05, 0.01, 0.001))
-pCalibrate(p=c(0.05, 0.01, 0.001), alternative="informative")
+pCalibrate(p=c(0.05, 0.01, 0.001), type="confirmatory")
 
-# plot the 2 calibrations as a function of the P-value
+# plot the 2 calibrations as a function of the p-value
 par(las=1)
 p <- exp(seq(log(0.0001), log(0.3), by=0.01))
 minBF1 <- pCalibrate(p=p)
-minBF2 <- pCalibrate(p=p, alternative="informative")
+minBF2 <- pCalibrate(p=p, type="confirmatory")
 plot(p, minBF1, type="l", log="xy",
-      xlab="Two sided P-value", ylab="Minimum Bayes factor", 
+      xlab="Two sided p-value", ylab="Minimum Bayes factor", 
      axes=FALSE, lwd=2, col=1)
 lines(p, minBF2, col=2, lwd=2)
 axis(1, at=c(0.0001, 0.0003, 0.001, 0.003, 0.01, 0.03, 0.1, 0.3), 
-     as.character(c(format(c(0.0001,0.0003), nsmall=4, digits=4, scientific=FALSE), 
-                    c(0.001, 0.003, 0.01, 0.03, 0.1, 0.3))))
+     as.character(c(format(c(0.0001,0.0003), nsmall=4, digits=4, 
+                  scientific=FALSE), 
+     c(0.001, 0.003, 0.01, 0.03, 0.1, 0.3))))
 my.values <- c(3000, 1000, 300, 100, 30, 10, 3, 1)
 my.at <- 1/my.values
 my.ylegend <- c(paste("1/", my.values[-length(my.values)], sep=""), "1")

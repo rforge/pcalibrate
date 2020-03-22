@@ -67,19 +67,19 @@ bf.ft <- function(mu, p, df, log=FALSE){
 
 # transform to logarithm with different bases, input is the log.minBF
 transf <- function(x, fun="id"){
-    if(fun=="id")
-      result <- exp(x)
-    if(fun=="log")
-      result <- x
-    if(fun=="log2"){
-      c <- (log(2))^{-1}
-      result <- c*x
-    }
-    if(fun=="log10"){
-      c <- (log(10))^{-1}
-      result <- c*x
-    }
-    return(result)
+  if(fun=="id")
+    result <- exp(x)
+  if(fun=="log")
+    result <- x
+  if(fun=="log2"){
+    c <- (log(2))^{-1}
+    result <- c*x
+  }
+  if(fun=="log10"){
+    c <- (log(10))^{-1}
+    result <- c*x
+  }
+  return(result)
   # }
 }
 

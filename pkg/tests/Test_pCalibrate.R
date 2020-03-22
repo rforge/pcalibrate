@@ -5,11 +5,11 @@ p1 <- c(10^{-15}, 10^{-10}, 10^{-5}, 10^{-4}, 10^{-3})
 p2 <- exp(seq(from=log(0.005), to=0, by=0.2))
 p <- c(p1, p2)
 
-pCalibrate(p, alternative="noninformative")
-pCalibrate(p, alternative="informative")
+pCalibrate(p, type="exploratory")
+pCalibrate(p, type="confirmatory")
 
-pCalibrate(p, alternative="noninformative", transform="log")
-pCalibrate(p, alternative="informative", transform="log2")
+pCalibrate(p, type="exploratory", transform="log")
+pCalibrate(p, type="confirmatory", transform="log2")
 
 zCalibrate(p, type="one.sided", alternative="simple")
 zCalibrate(p, type="one.sided", alternative="normal")

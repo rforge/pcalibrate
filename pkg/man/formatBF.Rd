@@ -24,7 +24,7 @@ formatBF(BF, digits="default")
 }
 }
 \details{
-      The default formatting, which  is recommended in Held and Ott (2017), is as follows :
+      The default formatting, which  is recommended in Held and Ott (2018), is as follows :
       For very small Bayes factors BF < 1/1000, "< 1/1000" is returned.
     Bayes factors BF with 1/1000 <= BF <=1/10 are formatted as 1/x, where x is an integer
     and Bayes factors BF with 1/10 < BF < 1 as
@@ -47,8 +47,8 @@ formatBF(BF, digits="default")
 %% ...
 }
 \references{
- Held, L. and Ott, M. (2017). On p-values and Bayes factors.
- To appear in \emph{Annual Review of Statistics and Its Application, Volume 5}.
+ Held, L. and Ott, M. (2018). On p-values and Bayes factors.
+\emph{Annual Review of Statistics and Its Application}, \bold{5}, 393--419.
 %% ~put references to the literature/web site here ~
 }
 %\author{

@@ -1,17 +1,17 @@
 
 importFrom("MCMCpack", "dnoncenhypergeom")
 importFrom("exact2x2", "exact2x2")
-importFrom("epitools", "tab2by2.test")
 importFrom("stats", "dchisq", "df", "dnorm", "dt", "optimize", "pnorm",
-             "qchisq", "qf", "qnorm", "qt", "fisher.test", "uniroot", "dhyper")
+              "qchisq", "qf", "qnorm", "qt", "fisher.test", "uniroot", "dhyper")
 
 
 export(BF2pp)
 export(formatBF)
 export(pCalibrate)
 export(zCalibrate)
-# export(z.pCalibrate.els)
 export(FCalibrate)
 export(tCalibrate)
 export(LRCalibrate)
 export(twoby2Calibrate)
+export(z2p)
+export(p2z)
